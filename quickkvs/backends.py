@@ -140,10 +140,11 @@ class RedisBackend(object):
         if not item:
             raise KeyError
         ttl = self._calc_ttl(item)
-        return json.loads(item), ttl
+        return json.loads(unicode(item, "utf-8")), ttl
 
     def set_item(self, key, value, expires):
-        self._redis.set(key, json.dumps(value))
+        data = unicode(json.dumps(value)).encode("utf-8")
+        self._redis.set(key, data)
         if expires >= 0:
             self._redis.expire(key, expires)
 
