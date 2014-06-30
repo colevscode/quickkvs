@@ -128,9 +128,9 @@ class MongoBackend(ExpirationMixin):
 
 class RedisBackend(object):
 
-    def __init__(self, redis=None, host="localhost", port=6379, db=0):
+    def __init__(self, redis=None, host="localhost", port=6379, pw=None, db=0):
         from redis import StrictRedis
-        self._redis = redis or StrictRedis(host=host, port=port, db=db)
+        self._redis = redis or StrictRedis(host=host, port=port, password=pw, db=db)
 
     def _calc_ttl(self, item):
         return self._redis.ttl(item)
